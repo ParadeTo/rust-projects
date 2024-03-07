@@ -31,21 +31,21 @@ fn main() {
     // query!(SELECT * FROM users WHERE age > 10);
     // hello();
 
-    let a = Command::default();
-    // let command = Command::builder()
-    //     .executable("cargo".to_owned())
-    //     .args(vec!["build".to_owned(), "--release".to_owned()])
-    //     .env(vec![])
-    //     .build()
-    //     .unwrap();
-    // assert!(command.current_dir.is_none());
-    // let command = Command::builder()
-    //     .executable("cargo".to_owned())
-    //     .args(vec!["build".to_owned(), "--release".to_owned()])
-    //     .env(vec![])
-    //     .current_dir("..".to_owned())
-    //     .build()
-    //     .unwrap();
-    // assert!(command.current_dir.is_some());
-    // println!("{:?}", command);
+    // let a = Command::default();
+    let command = Command::builder()
+        .executable("cargo".to_owned())
+        .args(vec!["build".to_owned(), "--release".to_owned()])
+        .env(vec![])
+        .build()
+        .unwrap();
+    assert!(command.current_dir.is_none());
+    let command = Command::builder()
+        .executable("cargo".to_owned())
+        .args(vec!["build".to_owned(), "--release".to_owned()])
+        .env(vec![])
+        .current_dir("..".to_owned())
+        .build()
+        .unwrap();
+    assert!(command.current_dir.is_some());
+    println!("{:?}", command);
 }

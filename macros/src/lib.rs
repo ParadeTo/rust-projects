@@ -23,6 +23,6 @@ pub fn derive_raw_builder(input: TokenStream) -> TokenStream {
 #[proc_macro_derive(Builder)]
 pub fn derive_builder(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
-    eprintln!("{:#?}", input);
-    TokenStream::default()
+    // eprintln!("{:#?}", input);
+    crate::builder::BuilderContext::from(input).render().into()
 }
