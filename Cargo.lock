@@ -268,6 +268,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "design-pattern"
+version = "0.1.0"
+dependencies = [
+ "lazy_static",
+ "once_cell",
+]
+
+[[package]]
 name = "encoding_rs"
 version = "0.8.33"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -744,12 +752,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "paste"
-version = "1.0.14"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "de3145af08024dea9fa9914f381a17b8fc6034dfb00f3a84013f7ff43f29ed4c"
-
-[[package]]
 name = "percent-encoding"
 version = "2.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -829,14 +831,6 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "winreg",
-]
-
-[[package]]
-name = "rsrender"
-version = "0.1.0"
-dependencies = [
- "wasm-bindgen",
- "wasm-react",
 ]
 
 [[package]]
@@ -1253,18 +1247,6 @@ name = "wasm-bindgen-shared"
 version = "0.2.92"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "af190c94f2773fdb3729c55b007a722abb5384da03bc0986df4c289bf5567e96"
-
-[[package]]
-name = "wasm-react"
-version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a780c707d43e664b3a7963e0f12dfcdcab15384c746ed1b526fdc5e2dcb187b"
-dependencies = [
- "js-sys",
- "paste",
- "wasm-bindgen",
- "web-sys",
-]
 
 [[package]]
 name = "web-sys"
