@@ -1,6 +1,6 @@
 use askama::Template;
 // use crate::command::Command;
-use macros::{query, Builder, RawBuilder};
+use macros::{query, show_streams, Builder, RawBuilder};
 
 #[macro_use]
 mod my_macros;
@@ -14,17 +14,15 @@ pub struct Command {
     current_dir: Option<String>,
 }
 
-#[derive(Template)]
-#[template(path = "demo.j2", escape = "none")]
+#[show_streams]
 struct T {
     name: String,
 }
 
 fn main() {
-    // let t = T {
-    //     name: "ayou".to_string(),
-    // };
-    // t.render_into();
+    let t = T {
+        name: "ayou".to_string(),
+    };
 
     // let v = my_vec!(1, 2, 3, 4);
     // println!("{:?}", v);

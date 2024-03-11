@@ -26,3 +26,12 @@ pub fn derive_builder(input: TokenStream) -> TokenStream {
     // eprintln!("{:#?}", input);
     crate::builder::BuilderContext::from(input).render().into()
 }
+
+// my-macro/src/lib.rs
+
+#[proc_macro_attribute]
+pub fn show_streams(attr: TokenStream, item: TokenStream) -> TokenStream {
+    eprintln!("attr: \"{}\"", attr.to_string());
+    eprintln!("item: \"{}\"", item.to_string());
+    item
+}
