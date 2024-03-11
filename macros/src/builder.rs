@@ -135,8 +135,8 @@ fn get_option_inner(ty: &Type) -> (bool, &Type) {
                 // 获取其第一个值，如果是 GenericArgument::Type，则返回
                 let t = match &v.arguments {
                     PathArguments::AngleBracketed(a) => match a.args.iter().next() {
-                        _ => panic!("Not sure what to do with other GenericArgument"),
                         Some(GenericArgument::Type(t)) => t,
+                        _ => panic!("Not sure what to do with other GenericArgument"),
                     },
                     _ => panic!("Not sure what to do with other PathArguments"),
                 };
