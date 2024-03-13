@@ -1,13 +1,14 @@
 use anyhow::{anyhow, Result};
 use clap::{Args, Parser, Subcommand};
-use reqwest::Url;
+use reqwest::{Client, Url};
+use std::collections::HashMap;
 use std::str::FromStr;
 
 #[derive(Parser, Debug)]
 #[command()]
 struct Opts {
     #[command(subcommand)]
-    subcmd: Option<SubCommand>,
+    subcmd: SubCommand,
 }
 
 #[derive(Subcommand, Debug)]
@@ -33,10 +34,10 @@ struct Post {
     #[arg(value_parser = parse_url)]
     url: String,
     #[arg(value_parser = parse_kv_pair)]
-    body: KvPair,
+    body: Vec<KvPair>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 struct KvPair {
     k: String,
     v: String,
@@ -60,11 +61,33 @@ impl FromStr for KvPair {
 
 fn parse_kv_pair(s: &str) -> Result<KvPair> {
     let a: KvPair = s.parse()?;
-    println!("{:?}", a);
     Ok(a)
 }
 
-fn main() {
+async fn get(client: Client, args: &Get) -> Result<()> {
+    let resp = client.get(&args.url).send().await?;
+    println!("{:?}", resp.text().await?);
+    Ok(())
+}
+
+async fn post(client: Client, args: &Post) -> Result<()> {
+    let mut body = HashMap::new();
+    for pair in args.body.iter() {
+        body.insert(&pair.k, &pair.v);
+    }
+    let resp = client.post(&args.url).json(&body).send().await?;
+    println!("{:?}", resp.text().await?);
+    Ok(())
+}
+
+#[tokio::main]
+async fn main() -> Result<()> {
     let opts: Opts = Opts::parse();
-    println!("{:?}", opts);
+    let client = Client::new();
+    let result = match opts.subcmd {
+        SubCommand::Get(ref args) => get(client, args).await?,
+        SubCommand::Post(ref args) => post(client, args).await?,
+    };
+    println!("{:?}", result);
+    Ok(())
 }
