@@ -1,0 +1,92 @@
+mod simple_factory;
+
+// 抽象产品 trait
+trait Product {
+    fn operation(&self);
+}
+
+// 具体产品 A
+struct ConcreteProductA;
+impl Product for ConcreteProductA {
+    fn operation(&self) {
+        println!("ConcreteProductA operation");
+    }
+}
+
+// 具体产品 B
+struct ConcreteProductB;
+
+impl Product for ConcreteProductB {
+    fn operation(&self) {
+        println!("ConcreteProductB operation");
+    }
+}
+
+// 抽象工厂 trait
+trait Creator {
+    fn factory_method(&self) -> Box<dyn Product>;
+
+    // 其他业务逻辑...
+
+    // 客户端代码通过调用该方法来创建产品
+    fn create_product(&self) -> Box<dyn Product> {
+        let product = self.factory_method();
+        // 其他业务逻辑...
+        product
+    }
+    fn print_a(&self);
+}
+
+// 具体工厂 A
+struct ConcreteCreatorA {
+    a: i32,
+}
+
+impl Creator for ConcreteCreatorA {
+    fn factory_method(&self) -> Box<dyn Product> {
+        Box::new(ConcreteProductA)
+    }
+
+    fn print_a(&self) {
+        println!("{:p}", &self.a)
+    }
+}
+
+// 具体工厂 B
+struct ConcreteCreatorB {
+    a: i32,
+}
+
+impl Creator for ConcreteCreatorB {
+    fn factory_method(&self) -> Box<dyn Product> {
+        Box::new(ConcreteProductB)
+    }
+
+    fn print_a(&self) {
+        println!("{:p}", &self.a)
+    }
+}
+
+// 客户端代码
+fn main() {
+    let creator_a: &dyn Creator = &ConcreteCreatorA { a: 1 };
+    let creator_a2: Box<dyn Creator> = Box::new(ConcreteCreatorB { a: 1 });
+    let creator_a: &dyn Creator = &ConcreteCreatorA { a: 1 };
+    creator_a.print_a();
+    creator_a2.print_a();
+    let product_a: Box<dyn Product> = creator_a.create_product();
+    product_a.operation();
+
+    let creator_b: Box<dyn Creator> = Box::new(ConcreteCreatorB { a: 1 });
+    let creator_b2: &dyn Creator = &ConcreteCreatorB { a: 1 };
+    creator_b.print_a();
+    creator_b2.print_a();
+
+    let product_b: Box<dyn Product> = creator_b.create_product();
+    product_b.operation();
+
+    println!(
+        "{:p} {:p} {:p} {:p}",
+        creator_a, creator_a2, creator_b, creator_b2
+    )
+}
