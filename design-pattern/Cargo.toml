@@ -11,6 +11,10 @@ path = "./singleton/main.rs"
 name = 'factoryMethod'
 path = "./factoryMethod/main.rs"
 
+[[bin]]
+name = 'prototype'
+path = "./prototype/main.rs"
+
 [dependencies]
 lazy_static = "1.4.0"
 once_cell = "1.19.0"
